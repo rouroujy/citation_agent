@@ -5,6 +5,7 @@ tools/search_reference_tool.py
 import re
 
 def extract_references(text: str):
+    print("=====开始找参考文献=====")
 
     # 1️⃣ 找到“参考文献”位置
     ref_start = text.find("参考文献")

@@ -9,18 +9,25 @@ def verify_citation(reference, context):
     print("\n=====================")
     print("\n开始判别引用是否合理\n")
     prompt = f"""
-请判断以下引用是否合理：
+    你是一个严谨的论文审稿人。
 
-引用：
-{reference}
+    请判断引用是否被正确支持。
 
-上下文：
-{context}
+    【引用内容】
+    {reference}
 
-请输出：
-valid / invalid +i理由
+    【检索证据】
+    {context}
 
-"""
+    请输出JSON：
+    {{
+  "verdict": "valid / invalid",
+  "reason": "...",
+  "evidence": "...",
+  "confidence": 0-1
+    }}
+
+    """
     
     return call_llm(prompt)
 

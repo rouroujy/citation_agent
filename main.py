@@ -5,11 +5,17 @@ main.py
 from agent.agent_graph import build_graph
 from tools.parse_pdf_tool import parse_pdf
 
+print("===========开始main===========")
+
 graph = build_graph()
 
 file_path = "data/papers/tests.pdf"
 
 text = parse_pdf(file_path)
+
+# chunks = chunk_text(text)
+
+# build_index(chunks)
 
 state = {
     "text": text
