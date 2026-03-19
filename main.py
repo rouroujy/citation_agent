@@ -13,10 +13,6 @@ file_path = "data/papers/tests.pdf"
 
 text = parse_pdf(file_path)
 
-# chunks = chunk_text(text)
-
-# build_index(chunks)
-
 state = {
     "text": text
 }
@@ -24,4 +20,6 @@ state = {
 result = graph.invoke(state)
 
 print("\n最终结果：")
-print(result)
+for item in result["result"]:
+    print(item)
+    print("-" * 50)
