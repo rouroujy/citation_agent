@@ -1,5 +1,9 @@
 '''
 api/server.py
+
+uvicorn api.server:app --reload --port 8000
+
+访问 http://localhost:8000/docs
 '''
 from fastapi import FastAPI, UploadFile, File
 import shutil
