@@ -12,8 +12,15 @@ import redis
 import hashlib
 import json
 
+import os
+
+
+# docker 连接
+host = os.getenv("REDIS_HOST", "localhost")
+r = redis.Redis(host = host, port = 6379, db = 0)
+
 # WSL本地连接
-r = redis.Redis(host = "localhost", port = 6379, db = 0)
+# r = redis.Redis(host = "localhost", port = 6379, db = 0)
 
 def generate_key(file_bytes: bytes):
     return hashlib.md5(file_bytes).hexdigest()

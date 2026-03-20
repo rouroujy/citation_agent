@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+
+  api:
+    build:
+      context: .
+    container_name: citation_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+    networks:
+      - app_net
+
+  redis:
+    image: redis:7
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+    networks:
+      - app_net
+
+networks:
+  app_net:

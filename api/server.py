@@ -18,6 +18,24 @@ app = FastAPI()
 # 全局只初始化一次
 graph = build_graph()
 
+
+# 加测试端口
+import redis
+
+redis_host = os.getenv("REDIS_HOST", "localhost")
+
+r = redis.Redis(host=redis_host, port=6379, decode_responses=True)
+
+@app.get("/")
+def read_root():
+    return {"msg": "API is running"}
+
+@app.get("/redis-test")
+def redis_test():
+    r.set("test_key", "hello_docker")
+    value = r.get("test_key")
+    return {"redis_value": value}
+
 @app.post("/verify_paper")
 async def verify(file: UploadFile = File(...)):
     try:
