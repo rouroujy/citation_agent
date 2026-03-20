@@ -41,6 +41,11 @@ if uploaded_file is not None:
             if response.status_code == 200:
                 data = response.json()  # ✅ 必须加()
 
+                if data.get("cache"):
+                    st.success("命中缓存，快")
+                else:
+                    st.warning("实时计算，慢")
+
                 st.success("分析完成！")
 
                 for item in data.get("results", []):
