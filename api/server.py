@@ -19,27 +19,32 @@ graph = build_graph()
 
 @app.post("/verify_paper")
 async def verify(file: UploadFile = File(...)):
-    # 保存文件
-    save_dir = "data/uploads"
-    os.makedirs(save_dir, exist_ok=True)
+    try:
+        # 保存文件
+        save_dir = "data/uploads"
+        os.makedirs(save_dir, exist_ok=True)
 
-    file_path = os.path.join(save_dir, file.filename)
+        file_path = os.path.join(save_dir, file.filename)
 
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
 
-    # 解析PDF
-    text = parse_pdf(file_path)
+        # 解析PDF
+        text = parse_pdf(file_path)
 
-    # 调用agent
-    state = {
-        "text": text
-    }
+        # 调用agent
+        state = {
+            "text": text
+        }
 
-    result = graph.invoke(state)
+        result = graph.invoke(state)
 
-    # 返回结果
-    return{
-        "filename": file.filename,
-        "result":result["result"]
-    }
+        # 返回结果
+        return{
+            "filename": file.filename,
+            "results":result.get("result",[])
+        }
+    except Exception as e:
+        return{
+            "error":str(e)
+        }
