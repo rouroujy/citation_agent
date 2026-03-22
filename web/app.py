@@ -24,7 +24,7 @@ if uploaded_file is not None:
         files = {
             "file": (
                 uploaded_file.name,
-                uploaded_file.getvalue(),  # ✅ 关键
+                uploaded_file.getvalue(), 
                 "application/pdf"
             )
         }
@@ -37,14 +37,13 @@ if uploaded_file is not None:
 
             st.write("状态码:", response.status_code)
             # st.write("原始返回:", response.text)
+            if response.json().get("cache"):
+                st.success("命中缓存，快")
+            else:
+                st.warning("实时计算，慢")
 
             if response.status_code == 200:
-                data = response.json()  # ✅ 必须加()
-
-                if data.get("cache"):
-                    st.success("命中缓存，快")
-                else:
-                    st.warning("实时计算，慢")
+                data = response.json()
 
                 st.success("分析完成！")
 
@@ -60,7 +59,7 @@ if uploaded_file is not None:
                     else:
                         st.error("错误！")
 
-                    st.write("原因：", item.get("reason", ""))  # ✅ 修复
+                    st.write("原因：", item.get("reason", ""))
                     st.write("置信度：", item.get("confidence", ""))
 
         except Exception as e:

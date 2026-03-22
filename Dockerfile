@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-# 👇 不用代理，不用国内源
+# 不用代理，不用国内源
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .

@@ -2,6 +2,7 @@
 api/server.py
 
 uvicorn api.server:app --reload --port 8000
+sudo service redis-server start
 
 访问 http://localhost:8000/docs
 '''
@@ -22,7 +23,9 @@ graph = build_graph()
 # 加测试端口
 import redis
 
-redis_host = os.getenv("REDIS_HOST", "localhost")
+# redis_host = os.getenv("REDIS_HOST", "localhost")
+redis_host = os.getenv("REDIS_HOST", "redis")
+
 
 r = redis.Redis(host=redis_host, port=6379, decode_responses=True)
 
