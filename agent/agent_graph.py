@@ -53,40 +53,40 @@ def build_graph():
         for ref in state["references"]:
 
             # ========================
-            # Step1：找到引用上下文
+            # Step1：找到文献内容
             # ========================
             citation_context = extract_citation_context(
                 full_text,
                 ref["id"]
             )
 
-            print("\n📌 引用上下文：")
+            print("\n 文献名称内容如下：")
             print(citation_context[:300])
 
             # ========================
-            # ✅ Step1.5：分类 citation 类型（新增🔥）
+            # ✅ Step1.5：分类 citation 类型（新增）
             # ========================
             citation_type = classify_citation(citation_context)
             print("📊 citation类型：", citation_type)
 
             # ========================
-            # Step2：RAG检索
+            # Step2：利用文献名称在整个论文中进行RAG检索
             # ========================
             rag_context = rag_search(citation_context)
 
             # ========================
-            # Step3：判别（传入类型🔥）
+            # Step3：利用文献名称和引用上下文进行判别（传入类型）
             # ========================
             result = verify_citation(
                 ref["text"],
                 rag_context,
-                citation_type   # ✅ 新增参数
+                citation_type   # 新增参数
             )
 
             results.append({
                 "ref": ref["text"],
                 "citation_context": citation_context[:200],
-                "type": citation_type,   # ✅ 保存类型
+                "type": citation_type,   # 保存类型
                 **result
             })
 
